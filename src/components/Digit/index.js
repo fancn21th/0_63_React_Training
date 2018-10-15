@@ -1,7 +1,9 @@
 import React from 'react'
 
 const Digit = ({text}) => (
-  <div className={text === '0' && 'zero'} >{text}</div>
+  text === '0' ?
+    <div className="zero" >{text}</div>:
+    <div>{text}</div>
 )
 
 export default Digit
