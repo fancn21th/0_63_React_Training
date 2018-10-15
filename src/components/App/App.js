@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Result from '../Result'
 import Operator1 from '../Operator1'
+import Operator2 from '../Operator2'
+import Digit from '../Digit'
 
 class App extends Component {
   constructor(props){
@@ -84,11 +86,18 @@ class App extends Component {
                 return (
                   <Operator1 key={operator.val} text={operator.val}/>
                 )
+              case 'operator2':
+                return (
+                  <Operator2 key={operator.val} text={operator.val}/>
+                )
+              case 'digit':
+                return (
+                  <Digit key={operator.val} text={operator.val}/>
+                )
               default:
                 return (<div key={operator.val}>{operator.val}</div>)
             }
           })
-
         }
       </div>
     );

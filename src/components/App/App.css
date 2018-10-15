@@ -19,17 +19,20 @@
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(50px, auto);
 }
+
 .calculator > div {
   text-align: center;
   background-color: #F2F2F2;
   border: 1px solid #999;
   line-height: 50px;
 }
+
 .calculator .result {
   grid-column: 1 / 5;
   background-color: #333;
   color: white;
 }
+
 .calculator .zero {
   grid-column: 1 / 3;
 }
