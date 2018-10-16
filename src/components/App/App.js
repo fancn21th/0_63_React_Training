@@ -13,13 +13,50 @@ class App extends Component {
       operators,
       result: 520
     }
-    this.onClick.bind(this)
+    this._lastOprand = null
+    this._isNextOperand = false
+    this.commandHanlder = this.commandHanlder.bind(this)
   }
-  onClick(val) {
+  commandHanlder(val, type = '') {
+    if (type) {
+      switch(type.toLowerCase()) {
+        case 'digit':
+          if (this._isNextOperand) {
+            this.setState({
+              result: val
+            })
+            this._isNextOperand = false
+          } else {
+            this.setState({
+              result: this.state.result + val
+            })
+          }
+          break
+        default:
+          break
+      }
+      return
+    }
     switch(val.toLowerCase()) {
       case 'c':
         this.setState({
           result: 0
+        })
+        break
+      case '+/-':
+        this.setState({
+          result: this.state.result.charAt(0) === '-' ?
+            this.state.result.substring(1) :
+            '-' + this.state.result
+        })
+        break
+      case '+':
+        this._lastOprand = this.state.result
+        this._isNextOperand = true
+        break
+      case '=':
+        this.setState({
+          result: parseInt(this._lastOprand, 10) + parseInt(this.state.result)
         })
         break
       default:
@@ -44,16 +81,24 @@ class App extends Component {
                   <Operator1
                     key={operator.val}
                     text={operator.val}
-                    onClick={this.onClick}
+                    onClick={this.commandHanlder}
                   />
                 )
               case 'operator2':
                 return (
-                  <Operator2 key={operator.val} text={operator.val}/>
+                  <Operator2
+                    key={operator.val}
+                    text={operator.val}
+                    onClick={this.commandHanlder}
+                  />
                 )
               case 'digit':
                 return (
-                  <Digit key={operator.val} text={operator.val}/>
+                  <Digit
+                    key={operator.val}
+                    text={operator.val}
+                    onClick={this.commandHanlder}
+                  />
                 )
               default:
                 return (<div key={operator.val}>{operator.val}</div>)
