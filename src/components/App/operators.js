@@ -1,61 +1,61 @@
 export default [{
   type: 'result',
-  val: '520'
-},{
+  val: '520',
+}, {
   type: 'operator1',
-  val: 'C'
-},{
+  val: 'C',
+}, {
   type: 'operator1',
-  val: '+/-'
-},{
+  val: '+/-',
+}, {
   type: 'operator1',
-  val: '%'
-},{
+  val: '%',
+}, {
   type: 'operator2',
-  val: '/'
-},{
+  val: '/',
+}, {
   type: 'digit',
-  val: '7'
-},{
+  val: '7',
+}, {
   type: 'digit',
-  val: '8'
-},{
+  val: '8',
+}, {
   type: 'digit',
-  val: '9'
-},{
+  val: '9',
+}, {
   type: 'operator2',
-  val: '*'
-},{
+  val: '*',
+}, {
   type: 'digit',
-  val: '4'
-},{
+  val: '4',
+}, {
   type: 'digit',
-  val: '5'
-},{
+  val: '5',
+}, {
   type: 'digit',
-  val: '6'
-},{
+  val: '6',
+}, {
   type: 'operator2',
-  val: '-'
-},{
+  val: '-',
+}, {
   type: 'digit',
-  val: '1'
-},{
+  val: '1',
+}, {
   type: 'digit',
-  val: '2'
-},{
+  val: '2',
+}, {
   type: 'digit',
-  val: '3'
-},{
+  val: '3',
+}, {
   type: 'operator2',
-  val: '+'
-},{
+  val: '+',
+}, {
   type: 'digit',
-  val: '0'
-},{
+  val: '0',
+}, {
   type: 'dot',
-  val: '.'
-},{
+  val: '.',
+}, {
   type: 'operator2',
-  val: '='
+  val: '=',
 }]
