@@ -25,6 +25,7 @@
   background-color: #F2F2F2;
   border: 1px solid #999;
   line-height: 50px;
+  cursor: pointer;
 }
 
 .calculator .result {

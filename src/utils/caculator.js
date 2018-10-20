@@ -8,17 +8,14 @@ const TYPE_PERCENTAGE = 'TYPE_PERCENTAGE'
 
 // 闭包缓存
 let lastCommand = null
-let lastOperator = null
-let lastOperand = null
 let currentResult = '0'
-let isMinus = false
+let lastResult = null
+let lastOperator = null
 
 const reset = () => {
-  isMinus = false
   lastCommand = null
-  lastOperator = null
-  lastOperand = null
   currentResult = '0'
+  lastResult = null
 }
 
 const getType = (command) => {
@@ -43,32 +40,42 @@ const calculatorFunctions = {
   '+': (a, b) => a + b,
 }
 
-const saveLastOperand = (val) => {
-  lastOperand = isMinus ? -val : val
-  isMinus = false
-}
-
-const calculate = (a, ops, b) => calculatorFunctions[ops](a, b)
+const calculate = (a, ops, b) => calculatorFunctions[ops](a, b).toString()
 
 const calDigit = (command) => {
+  // 如果这是第一个输入的数字
   if (!lastCommand) {
     currentResult = command
     return
   }
 
-  if (lastCommand.type === TYPE_DIGIT) {
-    currentResult = currentResult === '0'
-      ? command
+  if (lastCommand.type === TYPE_DIGIT
+    || lastCommand.type === TYPE_CLEAR
+    || lastCommand.type === TYPE_PERCENTAGE) {
+    /*
+      two cases:
+        1. override the current result
+        2. append to current result
+    */
+    const minus = currentResult.charAt(0) === '-' ? '-' : ''
+    currentResult = currentResult === '0' || currentResult === '-0'
+      ? `${minus}${command}`
       : currentResult + command
   } else if (lastCommand.type === TYPE_OPERATOR) {
-    saveLastOperand(currentResult)
+    lastResult = currentResult
     currentResult = command
+  } else if (lastCommand.type === TYPE_DOT) {
+    currentResult += command
   }
 }
 
 const callEqual = () => {
-  if (currentResult && lastOperand) {
-    currentResult = calculate(parseInt(currentResult, 10), lastOperator, parseInt(lastOperand, 10))
+  if (currentResult && lastResult) {
+    currentResult = calculate(
+      parseFloat(currentResult, 10),
+      lastOperator,
+      parseFloat(lastResult, 10),
+    )
   }
 }
 
@@ -77,16 +84,29 @@ const callOperator = (command) => {
 }
 
 const callClear = () => {
-  isMinus = false
-  lastCommand = null
-  lastOperator = null
-  lastOperand = null
-  currentResult = '0'
+  reset()
+}
+
+const callPercentage = () => {
+  currentResult = currentResult !== '0' && currentResult !== '-0'
+    ? (parseFloat(currentResult) / 100).toString()
+    : currentResult
 }
 
 const callMinus = () => {
-  isMinus = !isMinus
+  currentResult = currentResult.charAt(0) === '-'
+    ? currentResult.substring(1)
+    : `-${currentResult}`
 }
+
+const callDot = () => {
+  currentResult = currentResult.endsWith('.') ? currentResult : `${currentResult}.`
+}
+
+/*
+  mental model:
+    1. result + command => result
+*/
 
 const cal = (command) => {
   const type = getType(command)
@@ -105,6 +125,12 @@ const cal = (command) => {
     break
   case TYPE_MINUS:
     callMinus(command)
+    break
+  case TYPE_DOT:
+    callDot(command)
+    break
+  case TYPE_PERCENTAGE:
+    callPercentage(command)
     break
   default:
     break

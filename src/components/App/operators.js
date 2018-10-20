@@ -53,7 +53,7 @@ export default [{
   type: 'digit',
   val: '0',
 }, {
-  type: 'dot',
+  type: 'digit',
   val: '.',
 }, {
   type: 'operator2',
