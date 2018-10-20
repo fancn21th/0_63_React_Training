@@ -16,6 +16,7 @@ const reset = () => {
   lastCommand = null
   currentResult = '0'
   lastResult = null
+  lastOperator = null
 }
 
 const getType = (command) => {
