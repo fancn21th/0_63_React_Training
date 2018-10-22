@@ -4,7 +4,7 @@ import Result from '../Result'
 import Operator1 from '../Operator1'
 import Operator2 from '../Operator2'
 import Digit from '../Digit'
-import operators from './operators'
+import operators from '../../data/operators'
 import cal from '../../utils/caculator'
 
 class App extends Component {
